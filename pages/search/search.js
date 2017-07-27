@@ -11,8 +11,8 @@ Page({
   makertap: function (e) {
     var that = this;
     var id = e.markerId;
-    that.showSearchInfo(wxMarkerData, id);      // 显示 兴趣点信息
-    that.changeMarkerColor(wxMarkerData, id);   // 改变 选中兴趣点颜色
+    that.showSearchInfo(wxMarkerData, id);   // 显示 兴趣点信息
+    that.changeMarkerColor(wxMarkerData, id);
   },
   // 页面加载
   onLoad: function () {
@@ -25,6 +25,12 @@ Page({
     };
     var success = function (data) {
       wxMarkerData = data.wxMarkerData;
+
+      // 打印POI
+      for(var i=0;i<wxMarkerData.length;i++){
+         console.log(wxMarkerData[i].title);
+      }
+      
       that.setData({
         markers: wxMarkerData
       });
@@ -37,7 +43,7 @@ Page({
     }
     // 搜索美食
     BMap.search({
-      "query"     : '美食',
+      "query"     : '',          // 搜索条件可以为空（默认返回生活服务、美食、酒店三种类型的POI）
       fail        : fail,        // 失败回调
       success     : success,     // 成功回调
       iconPath    : '../../img/marker_red.png', // 默认图标
